@@ -13,7 +13,6 @@ def provision():
     username = data.get('username')
     policy = data.get('policy')
 
-    # Place terraform project directory
     terraform_dir = os.getenv('TERRAFORM_DIR')
     
     tfvars_content = f"""
@@ -23,7 +22,7 @@ def provision():
     with open(f'{terraform_dir}/terraflask.tfvars', 'w') as f:
         f.write(tfvars_content)
 
-    # Exec Terraform commands
+    # Exec Terraform
     try:
         subprocess.run(['terraform', 'init'], check=True, cwd=terraform_dir)
         subprocess.run(['terraform', 'apply', '-auto-approve', '-var-file=terraflask.tfvars'], check=True, cwd=terraform_dir)
