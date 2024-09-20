@@ -4,6 +4,9 @@ Terraform API Service
 
 git clone this repo
 ```bash
+git clone https://github.com/threatofwar/terraflask.git
+```
+```bash
 cd terraflask
 ```
 ```bash
