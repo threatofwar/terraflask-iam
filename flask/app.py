@@ -15,6 +15,17 @@ def user_exists(username):
     except subprocess.CalledProcessError:
         return False
 
+@app.route('/')
+def hello_world():
+    return "Hello!"
+
+@app.route('/test', methods=['POST'])
+def testlink():
+    data = request.json
+    username = data.get('username')
+    policy = data.get('policy')
+    return f"username: {username} policy: {policy}"
+
 @app.route('/provision', methods=['POST'])
 def provision():
     data = request.json

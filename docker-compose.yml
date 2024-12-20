@@ -1,0 +1,27 @@
+version: "3.9"
+
+services:
+  terraflask:
+    build:
+      context: .
+    container_name: terraflask
+    ports:
+      - "${FLASK_EXPOSE_PORT}:${FLASK_EXPOSE_PORT}"
+    environment:
+      - FLASK_EXPOSE_HOST=${FLASK_EXPOSE_HOST}
+      - FLASK_EXPOSE_PORT=${FLASK_EXPOSE_PORT}
+      - TERRAFORM_DIR=/app/terraform
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION}
+    volumes:
+      - ./flask:/app/flask
+      - ./terraform:/app/terraform
+    networks:
+      - changeme_networkname
+    command: /bin/sh -c "cp /app/terraform/terraform.tfvars.example /app/terraform/terraform.tfvars && python3 /app/flask/app.py"
+
+networks:
+  changeme_networkname:
+    external:
+      name: aws_iam_user_create_network-name
